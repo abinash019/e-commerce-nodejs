@@ -23,7 +23,7 @@ export const authMiddleware = (req: any, res: Response, next: NextFunction) => {
     const decoded = jwt.verify(token, env.JWT_SECRET!) as any;
 
     req.user = {
-      id: decoded.userId, // REAL DB USER ID
+      id: decoded.userId,
       role: decoded.role || "USER",
     };
 

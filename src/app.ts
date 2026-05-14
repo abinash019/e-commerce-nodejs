@@ -19,33 +19,21 @@ const app = express();
 
 // Core middlewares
 app.use(cors({ origin: true, credentials: true }));
-
 app.use(helmet());
-
 app.use(cookieParser());
-
 app.use(morgan("dev"));
-
 app.use(rateLimitMiddleware);
 
+// JSON parser
 app.use(express.json());
-
-// IMPORTANT:
-// Stripe webhook routes BEFORE express.json()
-
-app.use("/api/v1/payments", paymentRoutes);
-
-// JSON parser AFTER webhook routes
 
 // Routes
 app.use("/api/v1/auth", authRoutes);
-
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productsRoutes);
-
 app.use("/api/v1/cart", cartRoutes);
-
 app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/payments", paymentRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
